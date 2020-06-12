@@ -10,8 +10,9 @@
 
 ## Java开发手册
 
-* [开发规范](java-kai-fa-shou-ce/kai-fa-gui-fan.md)
-* [分支管理](java-kai-fa-shou-ce/fen-zhi-guan-li.md)
+* [开发规范](java-kai-fa-shou-ce/kai-fa-gui-fan/README.md)
+  * [数据库设计规范](java-kai-fa-shou-ce/kai-fa-gui-fan/shu-ju-ku-she-ji-gui-fan.md)
+  * [分支管理](java-kai-fa-shou-ce/kai-fa-gui-fan/fen-zhi-guan-li.md)
 * [编程规约](java-kai-fa-shou-ce/bian-cheng-gui-yue/README.md)
   * [命名风格](java-kai-fa-shou-ce/bian-cheng-gui-yue/ming-ming-feng-ge.md)
   * [日期时间](java-kai-fa-shou-ce/bian-cheng-gui-yue/ri-qi-shi-jian.md)
