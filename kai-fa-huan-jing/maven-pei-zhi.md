@@ -1,3 +1,7 @@
+---
+description: Maven配置
+---
+
 # Maven配置
 
 #### 从开发工具集中下载解压Maven
