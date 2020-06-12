@@ -6,8 +6,6 @@ description: Maven配置
 
 #### 从开发工具集中下载解压Maven
 
-{% page-ref page="kai-fa-gong-ju-ji.md" %}
-
 ####  **配置maven环境变量**
 
 ![](../.gitbook/assets/image%20%2810%29.png)
