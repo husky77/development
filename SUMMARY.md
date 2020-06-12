@@ -11,6 +11,9 @@
 ## Java开发手册
 
 * [开发规范](java-kai-fa-shou-ce/kai-fa-gui-fan/README.md)
+  * [Rest API规范](java-kai-fa-shou-ce/kai-fa-gui-fan/rest-api-gui-fan.md)
+  * [Java基础开发规范](java-kai-fa-shou-ce/kai-fa-gui-fan/java-ji-chu-kai-fa-gui-fan.md)
+  * [Redis使用规范](java-kai-fa-shou-ce/kai-fa-gui-fan/redis-shi-yong-gui-fan.md)
   * [数据库设计规范](java-kai-fa-shou-ce/kai-fa-gui-fan/shu-ju-ku-she-ji-gui-fan.md)
   * [分支管理](java-kai-fa-shou-ce/kai-fa-gui-fan/fen-zhi-guan-li.md)
 * [编程规约](java-kai-fa-shou-ce/bian-cheng-gui-yue/README.md)
