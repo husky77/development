@@ -157,7 +157,7 @@ public class StudentServiceImpl implements ServiceImpl{
 
 #### `Controller`类相关注解
 
-* `@PreAuthorize`，设置API访问权限，Spring Security官方推荐该权限管理，当然你可以在XBoot权限菜单中动态配置，更佳灵活
+* `@PreAuthorize`，设置API访问权限，Spring Security官方推荐该权限管理
 
   * @PreAuthorize\("authenticated"\)
   * @PreAuthorize\("hasAuthority\('SCOPE\_add'\)"\)

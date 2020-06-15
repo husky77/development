@@ -19,10 +19,7 @@
   * [Redis使用规范](java-kai-fa-shou-ce/kai-fa-gui-fan/redis-shi-yong-gui-fan.md)
   * [数据库设计规范](java-kai-fa-shou-ce/kai-fa-gui-fan/shu-ju-ku-she-ji-gui-fan.md)
   * [开发新模块](java-kai-fa-shou-ce/kai-fa-gui-fan/kai-fa-xin-mo-kuai.md)
-* [编程规约](java-kai-fa-shou-ce/bian-cheng-gui-yue/README.md)
-  * [命名风格](java-kai-fa-shou-ce/bian-cheng-gui-yue/ming-ming-feng-ge.md)
-  * [日期时间](java-kai-fa-shou-ce/bian-cheng-gui-yue/ri-qi-shi-jian.md)
-  * [集合处理](java-kai-fa-shou-ce/bian-cheng-gui-yue/ji-he-chu-li.md)
+* [编程规约](java-kai-fa-shou-ce/bian-cheng-gui-yue.md)
 
 ## Vue 开发手册
 
