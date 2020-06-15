@@ -53,7 +53,7 @@
 @Table(name = "t_student")
 @TableName("t_student")
 @ApiModel(value = "测试")
-public class Student extends XbootBaseEntity {
+public class Student extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -186,7 +186,7 @@ public class StudentServiceImpl implements ServiceImpl{
 @Slf4j
 @RestController
 @Api(description = "测试管理接口")
-@RequestMapping("/xboot/student")
+@RequestMapping("/student")
 @Transactional
 public class StudentController extends SuperController<Student, String> {
 
