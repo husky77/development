@@ -2,21 +2,53 @@
 
 异常
 
-日志
+### 日志
 
-缓存
+项目中可以使用 `@Log`   注解来标记该方法需要写入日志,参数如下,标记下Controller 中
 
-事务
+```text
+/**模块*/
+String moduleName() default "";
 
-测试
+/**
+ * 操作
+ * @return
+ */
+String operation() default "";
 
-注释
+/**
+ * 操作描述
+ * @return
+ */
+String remark() default "";
 
-调度
+/**
+ * 日志类型（0：操作日志，1：登录日志）
+ */
+int logType()  default 0 ;
 
-配置
+/**
+ * 是否保存请求的参数
+ */
+boolean isSaveReqData() default true;
 
-文件
+/**
+ * 是否保存响应数据
+ */
+boolean isSaveResData() default true;
+```
 
-字典
+### 缓存
+
+#### 缓存注解
+
+```text
+@Cache(key = "'" + BizCacheConstants.SYS.CONFIG_ID + "' + #id")
+```
+
+### 清除缓存
+
+```text
+@CacheClear(key = "'" + BizCacheConstants.SYS.CONFIG_ID + "' + #sysConfig.id") //更新完成后清除缓存
+```
 

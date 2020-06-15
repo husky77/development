@@ -29,7 +29,9 @@ JAVA中有三种一般类型的可抛类: **检查性异常\(checked exceptions\
 2.将自定义异常中的原始异常包装并抛出。
 
 ```text
-catch (NoSuchMethodException e) {  throw new DaoObjectNotFoundException("Couldn't find dao with id " + id, e);}
+catch (NoSuchMethodException e) { 
+    throw new DaoObjectNotFoundException("Couldn't find dao with id " + id, e);
+ }
 ```
 
 错误的做法：
@@ -37,13 +39,23 @@ catch (NoSuchMethodException e) {  throw new DaoObjectNotFoundException("Couldn'
 1.不要吞下`catch`的异常。
 
 ```text
-try {    System.out.println("Never do that!");} catch (AnyException exception) {    // Do nothing}
+try {   
+     System.out.println("Never do that!");
+ } catch (AnyException exception) 
+ {  
+     // Do nothing
+ }
 ```
 
 * 这样的捕获毫无意义。我们应该使用一定的日志输出来定位到问题。 2.方法上应该抛出具体的异常。而不是`Exception`。
 
 ```text
-public void foo() throws Exception { //错误方式}public void foo() throws SQLException { //正确方式}
+public void foo() throws Exception {
+ //错误方式
+ }
+ public void foo() throws SQLException { 
+ //正确方式
+ }
 ```
 
 3.要捕获异常的子类，而不是直接捕获`Exception`。
@@ -57,29 +69,52 @@ catch (Exception e) { //错误方式}
 5.不要只是抛出一个新的异常，而应该包含堆栈信息。错误的做法：
 
 ```text
-try {    // Do the logic} catch (BankAccountNotFoundException exception) {    throw new BusinessException();    // or    throw new BusinessException("Some information: " + e.getMessage());}
+try {    
+// Do the logic
+} catch (BankAccountNotFoundException exception)
+{
+     throw new BusinessException();    
+     // or   
+ throw new BusinessException("Some information: " + e.getMessage());
+ }
 ```
 
 ```text
-try {    // Do the logic} catch (BankAccountNotFoundException exception) {    throw new BusinessException(exception);    // or    throw new BusinessException("Some information: " ,exception);}
+try {  
+  // Do the logic
+  } catch (BankAccountNotFoundException exception) 
+  {   
+   throw new BusinessException(exception);   
+ // or    throw new BusinessException("Some information: " ,exception);
+ }
 ```
 
 6.要么记录异常要么抛出异常，但不要一起执行。
 
 ```text
-catch (NoSuchMethodException e) {  //错误方式    LOGGER.error("Some information", e);   throw e;}
+catch (NoSuchMethodException e) {
+  //错误方式  
+    LOGGER.error("Some information", e);   throw e;
+}
 ```
 
 7.不要在`finally`中再抛出异常。
 
 ```text
-try {  someMethod();  //Throws exceptionOne} finally {  cleanUp();    //如果finally还抛出异常，那么exceptionOne将永远丢失}
+try { 
+   someMethod();
+   //Throws exceptionOne
+   } finally {
+     cleanUp();    //如果finally还抛出异常，那么exceptionOne将永远丢失
+}
 ```
 
 * 如果`someMethod` 和 `cleanUp` 都抛出异常，那么程序只会把第二个异常抛出来，原来的第一个异常（正确的原因）将永远丢失。 8.始终只捕获实际可处理的异常。
 
 ```text
-catch (NoSuchMethodException e) {   throw e; //避免这种情况，因为它没有任何帮助}
+catch (NoSuchMethodException e) { 
+  throw e; //避免这种情况，因为它没有任何帮助
+  }
 ```
 
 * 不要为了捕捉异常而捕捉，只有在想要处理异常时才捕捉异常。 9.不要使用`printStackTrace()`语句或类似的方法。
@@ -95,7 +130,11 @@ catch (NoSuchMethodException e) {   throw e; //避免这种情况，因为它没
 14.一个异常只能包含在一个日志中。
 
 ```text
-// 错误LOGGER.debug("Using cache sector A");LOGGER.debug("Using retry sector B");// 正确LOGGER.debug("Using cache sector A, using retry sector B");
+// 错误
+LOGGER.debug("Using cache sector A");
+LOGGER.debug("Using retry sector B");
+// 正确
+LOGGER.debug("Using cache sector A, using retry sector B");
 ```
 
 15.将所有相关信息尽可能地传递给异常。有用且信息丰富的异常消息和堆栈跟踪也非常重要。

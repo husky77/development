@@ -1,39 +1,52 @@
 # Java基础开发规范
 
-### 细节补充
+### 规范检查 <a id="h2-u89C4u8303u68C0u67E5"></a>
 
-1. 使用为底层以数组方式实现的集合、工具类时，如果能估计待添加的内容长度，请指定初始长度，避免引起多次扩容操作，这样可以明显地提升性能。比如`ArrayList、StringBuilder、StringBuffer、HashMap、HashSet`等等
-   * 但是，注意像`HashMap`这种是以数组+链表/树实现的集合，不要把初始大小和你估计的大小设置得一样，因为一个table上只连接一个对象的可能性几乎为0。初始大小建议设置为2的N次幂，如估计有2000个元素，可设置成`new HashMap(128)、new HashMap(256)`
-2. 当复制大量数据时，使用`System.arraycopy`命令
-3. 乘法和除法使用移位操作，用移位操作可以极大地提高性能，因为在计算机底层，对位的操作是最方便、最快的
-   * 移位操作虽然快，但是可能会使代码不太好理解，因此最好加上相应的注释。例如：
+本地开发开启两种规范检查，一种为sonarQube的规范检查，一种为基于sun和google的checkStyle规范检查。
 
-```text
-a = val * 8;
-b = val / 2;
-// 替换为 注释略
-a = val << 3;
-b = val >> 1;
-```
+同时在CI的SonarQube代码检查中也生效了这两种规范检查，控制代码质量。
 
-1. 尽量使用`HashMap、ArrayList、StringBuilder`，除非线程安全需要，否则不推荐使用`Hashtable、Vector、StringBuffer`
-2. 程序运行过程中避免使用反射
-   * 不建议在程序运行过程中使用尤其是频繁使用反射机制，特别是Method的`invoke`方法，如果确实有必要，一种建议的做法是将那些需要通过反射加载的类在项目启动的时候通过反射实例化出一个对象并放入内存—用户只关心和对端交互的时候获取最快的响应速度，并不关心对端的项目启动花多久时间。
-3. 使用带缓冲的输入输出流进行IO操作
-   * 带缓冲的输入输出流，即`BufferedReader、BufferedWriter、BufferedInputStream、BufferedOutputStream`，这可以极大地提升IO效率。
-4. 公用集合类中不使用的数据一定要及时清除掉
-   * 如果一个集合类是公用的（非方法里面的属性），那么这个集合里面的元素是不会自动释放的，因为始终有引用指向它们。所以如果公用集合里面的某些数据不使用而不去remove掉它们，那么将会造成这个公用集合不断增大，使得系统有内存泄露的隐患。
-5. 把一个基本数据类型转为字符串，基本数据类型`.toString()`是最快的方式、`String.valueOf()`次之、`数据+""`最慢
-6. 使用最有效率的方式去遍历Map
-   * 遍历Map的方式有很多，通常场景下我们需要的是遍历Map中的Key和Value，那么推荐使用的、效率最高的方式是使用`Iterator`
+* 本地开启sonarQube规范检查：
 
-```text
-Iterator it = map.entrySet().iterator();
-while (it.hasNext()){
-    Map.Entry entry = (Map.Entry) it.next();
-    // 获得key与value
-    Object k = entry.getKey();
-    Object v = entry.getValue();
-}
-```
+在Idea中安装sonarLint插件：
+
+![](https://static.bookstack.cn/projects/choerodon-v1.6/50a1324449671267bb9464ca9a385d7a.png)
+
+![](https://static.bookstack.cn/projects/choerodon-v1.6/39279b14c5379430bed5aac420f6db0c.png)
+
+指定本地修改的文件或者全项目检查：
+
+![](https://static.bookstack.cn/projects/choerodon-v1.6/a068406c79959c53032bf25798baa633.png)
+
+查看不符合检查的地方：
+
+![](https://static.bookstack.cn/projects/choerodon-v1.6/63fb1b5f11a026f178013b010201195f.png)
+
+* 本地开启checkStyle规范检查,注意更新插件，否则部分规则不适用于旧版本会报错：
+
+在Idea中安装CheckStyle-IDEA插件，步骤与上面安装插件一样
+
+生效checkStyle中checkStyle的规范config：[choerodon\_checks.xml](https://rdc.hand-china.com/gitlab/io.choerodon/coding_guidelines/raw/master/checkConfigure/choerodon_checks.xml)![Java&#x57FA;&#x7840;&#x5F00;&#x53D1;&#x89C4;&#x8303;  - &#x56FE;5](https://static.bookstack.cn/projects/choerodon-v1.6/63fb1b5f11a026f178013b010201195f.png)
+
+附:
+
+sonarQube规范检查规则链接：[SonarRules](https://rules.sonarsource.com/java/RSPEC-3281)
+
+googleCheck规范检查规则链接：[googleCheck](http://checkstyle.sourceforge.net/google_style.html)
+
+alibaba p3c代码规范：[aliP3c](https://github.com/alibaba/p3c)
+
+### idea设置 <a id="h2-idea-"></a>
+
+* 修改import分组、排序规则
+
+![](https://static.bookstack.cn/projects/choerodon-v1.6/06074b009acd43b649f688dfc0a1864a.png)
+
+* 换行设置
+
+![](https://static.bookstack.cn/projects/choerodon-v1.6/41ace657504e7e96a60a673b71cc6ff6.png)
+
+* tab设置
+
+![](https://static.bookstack.cn/projects/choerodon-v1.6/32772d67a680f977bd862ee505fd5aa4.png)
 
