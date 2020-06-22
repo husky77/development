@@ -79,7 +79,7 @@
 | value | String | "" | 数据库字段名 |
 | el | String | "" | 映射为原生 `#{ ... }` 逻辑,相当于写在 xml 里的 `#{ ... }` 部分 |
 | exist | boolean | true | 是否为数据库表字段 |
-| condition | String | "" | 字段 `where` 实体查询比较条件,有值设置则按设置的值为准,没有则为默认全局的 `%s=#{%s}`,[参考](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/SqlCondition.java) |
+| condition | String | "" | 字段 `where` 实体查询比较条件,有值设置则按设置的值为准,没有则为默认全局的 `%s=#{%s}` |
 | update | String | "" | 字段 `update set` 部分注入, 例如：update="%s+1"：表示更新时会set version=version+1\(该属性优先级高于 `el` 属性\) |
 | insertStrategy | Enum | DEFAULT | 举例：NOT\_NULL: `insert into table_a(<if test="columnProperty != null">column</if>) values (<if test="columnProperty != null">#{columnProperty}</if>)` |
 | updateStrategy | Enum | DEFAULT | 举例：IGNORED: `update table_a set column=#{columnProperty}` |
