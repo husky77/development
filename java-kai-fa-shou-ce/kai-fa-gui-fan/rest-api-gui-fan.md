@@ -7,8 +7,6 @@
 * PUT（UPDATE）：在服务器更新完整的资源（客户端提供改变后的完整资源）
 * DELETE（DELETE）：从服务器删除资源
 
-### Action 命名规范
-
 #### 基本规范
 
 使用”/“表示层级关系url 不能以”/“结尾url 中不能包含空格””url 中不能以文件后缀结尾url 中字母小写，单词间加下划线不要再url中添加CRUD
@@ -17,47 +15,25 @@
 
 | Description | Action Name | HTTP Mapping | HTTP Request Body | HTTP Response Body |
 | :--- | :--- | :--- | :--- | :--- |
-| 查询所有 | list | GET | N/A | Resource\*list |
+| 查询所有 | / | GET | N/A | Resource\*list |
 | 获取单个资源 | / | GET | N/A | Resource\* |
 | 创建单个资源 | / | POST | Resource | Resource\* |
 | 更新单个资源 | / | PUT | Resource | Resource\* |
 | 删除单个资源 | / | DELETE | N/A | Empty |
 
-#### 查询所有
-
-方法接受一个 Collection id 和0或多个参数作为输入,并返回一个列表的资源。
-
-List 必须使用 GET 方法接口必须以 collection id 结尾。其他的请求字段必须作为 url 查询参数。没有请求体，接口上必须不能包含request body。响应体应该包含一组资源和一些可选项元数据。
-
 #### 获取单个资源
-
-Query 方法接受一个 Resource name 和0或多个参数,并返回指定的资源。
-
-Query 必须使 GET 方法。请求url 必须包含 Resource name。其他的请求字段必须作为 url 查询参数。没有请求体，接口上必须不能包含request body。响应体应该返回整个资源对象。
-
-#### 创建单个资源
 
 方法接受一个 Collection id ,一个资源,和0或多个参数。它创建一个新的资源在指定的父资源下,并返回新创建的资源。
 
-必须使用 POST 方法。应该包含父资源名用于指定资源创建的位置。创建的资源应该对应在request body。响应体应该返回整个资源对象。Create 必须传递一个resource，这样即使resource 的结构发生变化，也不需要去更新方法或者资源结构，那些弃用的字段则需要标识为“只读”。
+必须使用 POST 方法。应该包含父资源名用于指定资源创建的位置。创建的资源应该对应在request body。响应体应该返回整个资源对象
 
 #### 更新单个资源
 
 方法接受一个资源和0或多个参数。更新指定的资源和其属性,并返回更新的资源。
 
-除了Resource Name 和其父资源之外，这个资源的所有属性应该是可以更新的。资源的重命名和移动则需要自定义方法。如果只支持一个完整对象的更新，Update 必须使用 PUT 方法。Resource Name必须包含在请求的url中。资源应该对应在request body。
-
 #### 删除单个资源
 
 方法接受一个Resource Name 和0或多个参数,并删除指定的资源。
-
-Delete 必须使用 DELETE 方法。Resource Name 必须包含在请求的url中。没有请求体，接口上必须不能包含request body。如果是立即删除，应该返回空如果是启动一个删除操作，应该返回一个删除操作。如果只是标识某个资源是“被删除的”，应该返回一个更新后的资源。如果多个删除请求删除同一资源，那么只有第一个请求才应该成功，其他的返回not found。
-
-### 自定义方法
-
-自定义的方法应该参考5个基本方法。应该用于基本方法不能实现的功能性方法。可能需要一个任意请求并返回一个任意的响应,也可能是流媒体请求和响应。
-
-自定义方法应该使用 POST 方法。不应该使用PATCH 方法。自定义方法对应的 Resource Name 或者 Collection id 必须包含在请求的url中。如果使用的HTTP 方法接受request body，则需要对应一个请求体。如果使用的HTTP 方法不接受request body，则需要声明不使用body，并且参数应该作为url查询参数。
 
 ### 批量添加
 
@@ -143,13 +119,13 @@ public class UserController {
         return null;
     }
     
-    @PutMapping("/{id}")
-    public Result<User> update(@PathVariable("id") String id, @RequestBody User user) {
+    @PutMapping("/")
+    public Result<User> update(@RequestBody User user) {
         return null;
     }
     
     @DeleteMapping("/{id}")
-    public Result<User> delete(@PathVariable("id") String id) {
+    public Result<User> delete(String id) {
         return null;
     }
     
