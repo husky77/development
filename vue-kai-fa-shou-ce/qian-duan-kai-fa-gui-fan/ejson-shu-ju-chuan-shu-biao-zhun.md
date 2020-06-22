@@ -1,12 +1,6 @@
-# E-JSON数据传输标准
+# 数据传输标准
 
-### 简介 <a id="h2-u7B80u4ECB"></a>
-
-E-JSON的设计目标是使业务系统向浏览器端传递的JSON数据保持一致，容易被理解和处理，并兼顾传输的数据量。E-JSON依托于http协议与JSON数据交换格式
-
-
-
-### JSON数据类型 <a id="h2-json-"></a>
+### JSON数据类型
 
 JSON（JavaScript Object Notation）是一种轻量级，基于文本，语言无关的数据交换格式。其包括了基本数据类型4种和复合数据类型2种，共6种数据类型。在下面章节中，JSON数据类型的表示法为JSON+空格+数据类型，如：JSON Array。
 
@@ -49,43 +43,43 @@ text/javascript;charset=UTF-8
 
 ### 数据字段 <a id="h2-u6570u636Eu5B57u6BB5"></a>
 
-返回的数据包含在http响应体中。数据 _必须_ 是一个JSON Object。该Object可能包含3个字段：status，statusInfo，data。
+返回的数据包含在http响应体中。数据 _必须_ 是一个JSON Object
 
-#### status <a id="h3-status"></a>
+#### code <a id="h3-status"></a>
 
-status字段 _必须_是一个不小于0的JSON Number整数，表示请求的状态。这个字段 _可以_ 被省略，省略时和为0时表示同一含义。
+字段 _必须_是一个不小于0的JSON Number整数
 
-0：表示server端理解了请求，成功处理并返回。
+200：表示server端理解了请求，成功处理并返回。
 
-非0：表示发生错误。 _可以_根据错误类型扩展错误码。
+非200：表示发生错误。 _可以_根据错误类型扩展错误码。
 
 **一个成功请求的status字段**
 
 ```text
-{    "status": 0,    "data": "hello world!"}
+{    "code": 200,    "data": "hello world!"}
 ```
 
-#### statusInfo <a id="h3-statusinfo"></a>
+#### msg <a id="h3-statusinfo"></a>
 
-statusInfo字段 _通常_是一个JSON String或JSON Object，表示除了请求状态外server端想要对status做出的说明，使client端能够获取更多信息进行后续处理。这个字段是 _可选的_。下面的两个例子中，statusInfo字段的信息都可以用于client端程序的后续处理，但是粒度和处理方式会有不同。
+msg字段 _通常_是一个JSON String或JSON Object，表示除了请求状态外server端想要对code做出的说明，使client端能够获取更多信息进行后续处理。
 
-**client端参数错误的statusInfo**
+**client端参数错误的**msg
 
-简单说明的statusInfo：
+简单说明的msg：
 
 ```text
 {    
-"status": 1,   
- "statusInfo": "参数错误"
+"code": 200,   
+"msg": "参数错误"
  }
 ```
 
-具有更多信息的statusInfo：
+具有更多信息的msg：
 
 ```text
 {    
-"status": 1,   
- "statusInfo": {   
+"code": 1,   
+"msg": {   
     "text": "参数错误",     
     "parameters": {           
      "email": "电子邮件格式不正确"  
@@ -96,35 +90,29 @@ statusInfo字段 _通常_是一个JSON String或JSON Object，表示除了请求
 
 #### data <a id="h3-data"></a>
 
-data字段可以是除JSON Null之外的任意JSON类型，表示请求返回的数据主体。这个字段是 _可选的_ 。数据主体data包含了在请求成功时有意义的数据。
+data字段可以是除JSON Null之外的任意JSON类型，表示请求返回的数据主体。数据主体data包含了在请求成功时有意义的数据。
 
 **一个查询姓名请求的返回数据**
 
 ```text
-{    "status": 0,    "data": "Lily"}
+{   
+  "code": 200, 
+   "data": "Lily"
+}
 ```
-
-### 数据场景 <a id="h2-u6570u636Eu573Au666F"></a>
-
-本章为常见数据场景定义了通用的标准数据格式，用于数据传输和使用。额外地，本章为部分可能大数据量传输的数据场景定义了变通数据格式。变通数据格式可在数据解析阶段转换成标准数据格式。
-
-变通数据格式 _必须\(MUST\)_ 是一个JSON Object，其中 _必须_ 包含e-type属性和data属性。e-type属性标识数据类型，便于对数据进行解析；data属性包含变通后的数据。变通数据 _可以_包含其他的属性，标识数据的其他扩展信息。
-
-变通数据格式的e-type属性定义了table值。e-type属性可以使用者扩展其他属性值，扩展的属性值 _必须\(MUST\)_ 以“项目缩写-名称”命名，如“fc-list”，自主解析。
-
-#### 日期类型 <a id="h3-u65E5u671Fu7C7Bu578B"></a>
-
-日期类型不属于JSON数据类型。对于日期类型，我们 _必须_使用JSON String来表示。为了让日期能够更容易的被显示和被解析，对于日期我们 _应当_使用更适合internet的格式，遵循rfc3339。
 
 **数据场景：日期**
 
 ```text
-{    "status": 0,    "data": "2010-10-10"}
+{    
+    "code": 0,    
+    "data": "2010-10-10 00:00:00"
+}
 ```
 
 #### 记录 <a id="h3-u8BB0u5F55"></a>
 
-记录代表二维表中的一行，通常用于表示某个具体事务抽象的属性。标准记录数据 _必须\(MUST\)_ 为一个JSON Object，记录的主键命名 _必须\(MUST\)_ 为“id”。单条记录数据不包含变通数据格式。
+记录代表二维表中的一行，通常用于表示某个具体事务抽象的属性。标准记录数据 _必须\(MUST\)_ 为一个JSON Object，记录的主键命名。单条记录数据不包含变通数据格式。
 
 **数据场景：记录**
 
@@ -132,56 +120,50 @@ data字段可以是除JSON Null之外的任意JSON类型，表示请求返回的
 {    "id": 250,    "name": "erik",    "sex": 1,    "age": 18}
 ```
 
-#### 二维表 <a id="h3-u4E8Cu7EF4u8868"></a>
-
-二维表类型表识为table，是关系模型的主要数据结构。二维表结构具有变通数据格式。标准二维表数据 _必须\(MUST\)_ 以一维JSON Array形式表示，JSON Array中每一项是一个JSON Object，代表一条记录。JSON Object的每个成员代表一个字段。每条记录的主键命名 _必须\(MUST\)_ 为”id”。
-
-在标准二维表中，字段名在每条记录中都被传输，会造成额外的数据量传输。这个问题会随着记录数的增大会更加突出。为了减少传输数据量，变通格式使用二维JSON Array传输数据，扩展fields属性用于字段说明。fields字段为JSON Array。
-
-**数据场景：标准二维表**
-
-```text
-[    {        "id": 250,        "name": "erik",        "sex": 1,        "age": 18    },    {        "id": 251,        "name": "欧阳先伟",        "sex": 1,        "age": 28    }]
-```
-
-**数据场景：变通二维表**
-
-```text
-{    "e-type": "table",    "fields": ["id", "name", "sex", "age"],    "data": [        [250, "erik", 1, 18],        [251, "欧阳先伟", 1, 28]    ]}
-```
-
 #### 数据页 <a id="h3-u6570u636Eu9875"></a>
 
 数据页是列表数据常用的数据方式，可能通过查询或翻页获得数据。数据页是二维表数据的包装，包含列表数据本身更多的信息。
 
-数据页 _必须\(MUST\)_ 是一个JSON Object，其中 _必须\(MUST\)_ 包含的属性为data。data是一个二维表。数据页可以包括一些 _可选\(OPTIONAL\)_ 的属性，表示当前数据页的信息。下表列举了数据页的可选属性。
-
 #### 数据页可选属性 <a id="h3-u6570u636Eu9875u53EFu9009u5C5Eu6027"></a>
 
-* {Number} page - 当前页码，计数 _必须\(MUST\)_ 为不小于0的整数，从0开始。
-* {Number} pageSize - 每页显示条数， _必须\(MUST\)_ 大于0。
-* {Number} total - 列表总记录数， _必须\(MUST\)_ 为不小于0的整数。表示当前条件下所有记录的数目，非本页的记录数。
+* {Number} pageNum - 当前页码，计数 为不小于0的整数，从0开始。
+* {Number} pageSize - 每页显示条数,大于0。
+* {Number} total - 列表总记录数， _必须_为不小于0的整数。表示当前条件下所有记录的数目，非本页的记录数。
 * {String} orderBy - 列表排序规则。多个排序规则之间以逗号分割（,）；正序或倒序以asc或desc表示，与字段名之间以一个空格间隔。例：”id desc,name asc”
 * {String} keyword - 列表所属的搜索关键字。
-* {Object} condition - 列表所属的搜索条件集合。属性中可以包含或不包含keyword字段，如果不包含， _建议\(RECOMMMANDED\)_ 在解析的时候附加搜索关键字keyword条件。
+* {Object} condition - 列表所属的搜索条件集合。属性中可以包含或不包含keyword字段，如果不包含， _建议_在解析的时候附加搜索关键字keyword条件。
 
 **数据场景：数据页**
 
 ```text
-{    "page": 0,    "pageSize": 30,    "keyword": "",    "data": [        {            "id": 250,            "name": "erik",            "sex": 1,            "age": 18        },        {            "id": 251,            "name": "欧阳先伟",            "sex": 1,            "age": 28        }    ]}
+{    
+ "page": 0,    
+ "pageSize": 30,    
+ "keyword": "",    
+ "condition":        
+  {            
+    "id": 250,            
+    "name": "erik",            
+    "sex": 1,            
+    "age": 18        
+    }   
+ }
 ```
 
 #### 键/值对象 <a id="h3--"></a>
 
 对于在一个JSON Object中表示键/值：
 
-* 键的属性名 _必须\(MUST\)_ 为name， _杜绝_使用key或k
-* 值的属性名 _必须\(MUST\)_ 为value， _杜绝_使用v。
+* 键的属性名必须为name， 杜绝使用key或k
+* 值的属性名必须为value， 杜绝使用v。
 
 **数据场景：键/值对象**
 
 ```text
-{    "name": "BMW",    "value": 1}
+{    
+    "name": "BMW",    
+    "value": 1
+}
 ```
 
 #### 键/值有序集合 <a id="h3--"></a>
@@ -193,23 +175,76 @@ data字段可以是除JSON Null之外的任意JSON类型，表示请求返回的
 **数据场景：键/值有序集合**
 
 ```text
-[    {        "name": "BMW",        "value": 1    },    {        "name": "Benz",        "value": 2,        "selected": true    }]
+[    
+    {        
+        "name": "BMW",        
+        "value": 1    
+        },   
+         {        
+         "name": "Benz",        
+         "value": 2,        
+         "selected": true    
+     }
+ ]
 ```
 
 #### 树 <a id="h3-u6811"></a>
 
-树形数据用于表示层叠的数据结构。树型数据 _必须\(MUST\)_ 是一个JSON Object，代表树型数据的根节点。下面是标准定义的可选节点列表，不在列表中的属性 _可以_自行扩展。
+树形数据用于表示层叠的数据结构。树型数据必须是一个JSON Object，代表树型数据的根节点。下面是标准定义的可选节点列表，不在列表中的属性 _可以_自行扩展。
 
 #### 树型数据结构的可选节点属性 <a id="h3-u6811u578Bu6570u636Eu7ED3u6784u7684u53EFu9009u8282u70B9u5C5Eu6027"></a>
 
 * {Number\|String} id - 节点的唯一标识。
-* {String} text - 名称或用于显示的字符串。
-* {Array} children - 子节点列表。
+* {String} name/title - 名称或用于显示的字符串。
+* {Array} children       - 子节点列表。
 
 **数据场景：树型数据**
 
 ```text
-{    "id": 1,    "text": "中国",    "children": [        {            "id": 10,            "text": "北京",            "children": [                {                    "id": 100,                    "text": "东城区"                },                {                    "id": 101,                    "text": "西城区"                },                {                    "id": 102,                    "text": "海淀区"                }                ......            ]        },        {            "id": 31,            "text": "海南",            "children": [                {                    "id": 600,                    "text": "海口"                },                {                    "id": 601,                    "text": "三亚"                },                {                    "id": 602,                    "text": "五指山"                }                ......            ]        }        ......    ]}
+{    
+    "id": 1,    
+    "name": "中国",    
+    "children": [        
+        {            
+            "id": 10,            
+            "name": "北京",            
+            "children": [                
+                {                    
+                    "id": 100,                    
+                    "name": "东城区"                
+                },                
+                {                    
+                    "id": 101,                    
+                    "name": "西城区"                
+                },                
+                {                    
+                    "id": 102,                    
+                    "name": "海淀区"                
+                }               
+                     ......            
+               ]    
+           },        
+           {            
+               "id": 31,            
+               "name": "海南",            
+               "children": [                
+                   {                    
+                       "id": 600,                    
+                       "name": "海口"                
+                   },                
+                   {                    
+                       "id": 601,                    
+                       "name": "三亚"                
+                   },                
+                   {                    
+                       "id": 602,                    
+                       "name": "五指山"                
+                   }                
+                       ......            
+                   ]        
+               }        
+               ......    
+       ]}
 ```
 
 

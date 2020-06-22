@@ -16,18 +16,19 @@
   * [Java基础开发规范](java-kai-fa-shou-ce/kai-fa-gui-fan/java-ji-chu-kai-fa-gui-fan.md)
   * [Rest API规范](java-kai-fa-shou-ce/kai-fa-gui-fan/rest-api-gui-fan.md)
   * [数据库设计规范](java-kai-fa-shou-ce/kai-fa-gui-fan/shu-ju-ku-she-ji-gui-fan.md)
+  * [实体类规范](java-kai-fa-shou-ce/kai-fa-gui-fan/shi-ti-lei-gui-fan.md)
+  * [代码生成](java-kai-fa-shou-ce/kai-fa-gui-fan/dai-ma-sheng-cheng.md)
   * [异常规范](java-kai-fa-shou-ce/kai-fa-gui-fan/yi-chang-gui-fan.md)
   * [日志规范](java-kai-fa-shou-ce/kai-fa-gui-fan/ri-zhi-gui-fan.md)
   * [单元测试教程](java-kai-fa-shou-ce/kai-fa-gui-fan/dan-yuan-ce-shi-jiao-cheng.md)
   * [注释规范](java-kai-fa-shou-ce/kai-fa-gui-fan/zhu-shi-gui-fan.md)
   * [常用实例](java-kai-fa-shou-ce/kai-fa-gui-fan/chang-yong-shi-li.md)
   * [开发新模块](java-kai-fa-shou-ce/kai-fa-gui-fan/kai-fa-xin-mo-kuai.md)
-* [编程规约](java-kai-fa-shou-ce/bian-cheng-gui-yue.md)
 
 ## Vue 开发手册
 
 * [前端开发规范](vue-kai-fa-shou-ce/qian-duan-kai-fa-gui-fan/README.md)
-  * [E-JSON数据传输标准](vue-kai-fa-shou-ce/qian-duan-kai-fa-gui-fan/ejson-shu-ju-chuan-shu-biao-zhun.md)
+  * [数据传输标准](vue-kai-fa-shou-ce/qian-duan-kai-fa-gui-fan/ejson-shu-ju-chuan-shu-biao-zhun.md)
   * [项目目录结构规范](vue-kai-fa-shou-ce/qian-duan-kai-fa-gui-fan/xiang-mu-mu-lu-jie-gou-gui-fan.md)
   * [前端设计](vue-kai-fa-shou-ce/qian-duan-kai-fa-gui-fan/qian-duan-she-ji-gui-fan.md)
 

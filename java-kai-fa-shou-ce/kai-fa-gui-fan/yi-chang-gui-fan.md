@@ -2,23 +2,7 @@
 
 ### 后端异常规范 <a id="h2-u540Eu7AEFu5F02u5E38u89C4u8303"></a>
 
-在开发使用中，异常应该能够很好地帮助我们定位到问题的所在。如果使用一种错误的方式，则bug很难被找到。
-
-### 异常的分类 <a id="h2-u5F02u5E38u7684u5206u7C7B"></a>
-
-JAVA中有三种一般类型的可抛类: **检查性异常\(checked exceptions\)**、**非检查性异常\(unchecked Exceptions\)** 和 **错误\(errors\)**。
-
-1.`Checked exceptions`：必须通过方法进行声明。这些异常都继承自`Exception`类。一个`Checked exception`声明了一些预期可能发生的异常。
-
-2.`Unchecked exceptions`：不需要声明的异常。大多继承自`RuntimeException`。例如`NullPointerException`，`ArrayOutOfBoundsException`。同时这样的异常不应该捕获，而应该打印出堆栈信息。
-
-3.`Errors`：大多是一些运行环境的问题，这些问题可能会导致系统无法运行。例如`OutOfMemoryError`，`StackOverflowError`。
-
-![&#x5F02;&#x5E38;&#x89C4;&#x8303;  - &#x56FE;1](https://static.bookstack.cn/projects/choerodon-v1.6/3234fcc7bfe95947291119e6cb159bc1.png)
-
 ### 用户自定义异常 <a id="h2-u7528u6237u81EAu5B9Au4E49u5F02u5E38"></a>
-
-我们应该遵循如下的规范。
 
 1.当应用程序出现问题时，直接抛出自定义异常。
 
@@ -70,22 +54,21 @@ catch (Exception e) { //错误方式}
 
 ```text
 try {    
-// Do the logic
 } catch (BankAccountNotFoundException exception)
 {
      throw new BusinessException();    
      // or   
- throw new BusinessException("Some information: " + e.getMessage());
+      throw new BusinessException("Some information: " + e.getMessage());
  }
 ```
 
 ```text
 try {  
-  // Do the logic
   } catch (BankAccountNotFoundException exception) 
   {   
    throw new BusinessException(exception);   
- // or    throw new BusinessException("Some information: " ,exception);
+ // or   
+  throw new BusinessException("Some information: " ,exception);
  }
 ```
 
@@ -94,7 +77,8 @@ try {
 ```text
 catch (NoSuchMethodException e) {
   //错误方式  
-    LOGGER.error("Some information", e);   throw e;
+    LOGGER.error("Some information", e);   
+    throw e;
 }
 ```
 
@@ -103,7 +87,6 @@ catch (NoSuchMethodException e) {
 ```text
 try { 
    someMethod();
-   //Throws exceptionOne
    } finally {
      cleanUp();    //如果finally还抛出异常，那么exceptionOne将永远丢失
 }

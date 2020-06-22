@@ -4,7 +4,7 @@
 
 * 每一个`entity`类即为一个实体类，对应数据库中的一个具体表。
 * 名称=`表具体名称`，表名中`_`替换为驼峰命名法，首字母大写。如：`Student`对应表为`t_student`。
-* 创建在 项目模块 的`xxx.entity.[模块名称]`包下。如：`xxx.entity.Student`
+* 创建在 项目模块 的`xxx.[模块名称].model`包下。如：`xxx.model.Student`
 
 #### 属性规范
 

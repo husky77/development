@@ -1,23 +1,10 @@
 # 日志规范
 
-### 异常类型 <a id="h2-u5F02u5E38u7C7Bu578B"></a>
-
-* `debug`非常具体的信息，只能用于开发调试使用。部署到生产环境后，这个级别的信息只能保持很短的时间。这些信息只能临时存在，并将最终被关闭。要区分`DEBUG`和`TRACE`会比较困难，对一个在开发及测试完成后将被删除的`LOG输出`，可能会比较适合定义为T`RACE`级别. 2.`info`重要的业务处理已经结束。在实际环境中，系统管理员或者高级用户要能理解`INFO`输出的信息并能很快的了解应用正在做什么。比如，一个和处理机票预订的系统，对每一张票要有且只有一条`INFO信`息描述 “`[Who] booked ticket from [Where] to [Where]`”。另外一种对`INFO`信息的定义是：记录显著改变应用状态的每一个`action`，比如：数据库更新、外部系统请求。
-
-3.`warn`发生这个级别问题时，处理过程可以继续，但必须对这个问题给予额外关注。这个问题又可以细分成两种情况：
-
-* 第一种是存在严重的问题但有应急措施（比如数据库不可用，使用Cache）；
-* 第二种是潜在问题及建议（ATTENTION）。
-
-比如生产环境的应用运行在`Development`模式下、管理控制台没有密码保护等。系统可以允许这种错误的存在，但必须及时做跟踪检查用户参数错误。可以使用`warn`日志级别来记录用户输入参数错误的情况，避免用户投诉时，无所适从。
-
-4.`error`系统中发生了非常严重的问题，必须马上有人进行处理。没有系统可以忍受这个级别的问题的存在。比如：NPEs（空指针异常），数据库不可用，关键业务流程中断等等。
-
 ### 异常规范 <a id="h2-u5F02u5E38u89C4u8303"></a>
 
-1.返回给前端接口统一抛出`io.choerodon.core.exception.CommonException`异常，这样返回给前端的状态码为`200`，前端通过`failed`是否为`true`判断成功与否。
+1.返回给前端接口统一抛出`CommonException`异常，这样返回给前端的状态码为`200`，前端通过`code`是否为`200`判断成功与否。
 
-2.内部接口\(用于被其他服务通过feign或ribbon调用的\)，统一抛出`io.choerodon.core.exception.FeignException`异常，抛出异常时状态码为`500`，方便接口调用端“`感知`”异常。
+2.内部接口\(用于被其他服务通过feign或ribbon调用的\)，统一抛出`FeignException`异常，抛出异常时状态码为`500`，方便接口调用端“`感知`”异常。
 
 3.手动抛异常时应该把`exception`一块抛出，可以保留异常堆栈。 try { String input = mapper.writeValueAsString\(projectEventMsg\); sagaClient.startSaga\(PROJECT\_UPDATE, new StartInstanceDTO\(input, “project”, “” + projectDO.getId\(\)\)\); } catch \(Exception e\) { throw new CommonException\(“error.projectService.update.event”, e\); }
 
