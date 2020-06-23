@@ -4,7 +4,7 @@
 
 JSON（JavaScript Object Notation）是一种轻量级，基于文本，语言无关的数据交换格式。其包括了基本数据类型4种和复合数据类型2种，共6种数据类型。在下面章节中，JSON数据类型的表示法为JSON+空格+数据类型，如：JSON Array。
 
-传输的数据，包括对象属性以及数组成员， _必须_是6种JSON数据类型之一。 _杜绝_ 使用function、Date等js对象类型。
+传输的数据，包括对象属性以及数组成员， _必须_是6种JSON数据类型之一。 杜绝使用function、Date等js对象类型。
 
 #### 基本数据类型 <a id="h3-u57FAu672Cu6570u636Eu7C7Bu578B"></a>
 
@@ -25,20 +25,20 @@ Array\(数组\)为多个值的有序集合，数组元素间以逗号\(,\)分隔
 
 ### http响应头 <a id="h2-http-"></a>
 
-#### status <a id="h3-status"></a>
+#### code <a id="h3-status"></a>
 
 http响应的status _必须_ 为200。通常JSON数据被用于通过XMLHttpRequest对象访问，通过javascript进行处理。返回错误的状态码可能导致错误不被响应，数据不被处理。
 
 #### Content-Type <a id="h3-content-type"></a>
 
-Content-Type字段定义了响应体的类型。一般情况下，浏览器会根据该类型对内容进行正确的处理。对于传输JSON数据的响应，Content-Type _推荐_设置为”text/javascript”或”text/plain”。 _避免_将Context-Type设置为text/html，否则可能导致安全问题。
+Content-Type字段定义了响应体的类型。一般情况下，浏览器会根据该类型对内容进行正确的处理。对于传输JSON数据的响应，Content-Type _推荐_设置为”application/json”或”text/plain”。 _避免_将Context-Type设置为text/html，否则可能导致安全问题。
 
 Content-Type中可以指定字符集。通常 _需要_ 明确指定一个字符集。如果是通过XMLHTTPRequest请求的数据，并且字符编码为UTF-8时，可以不指定字符集。
 
 **Context-Type示例**
 
 ```text
-text/javascript;charset=UTF-8
+application/json;charset=UTF-8
 ```
 
 ### 数据字段 <a id="h2-u6570u636Eu5B57u6BB5"></a>
@@ -56,7 +56,10 @@ text/javascript;charset=UTF-8
 **一个成功请求的status字段**
 
 ```text
-{    "code": 200,    "data": "hello world!"}
+{    
+    "code": 200,    
+    "data": "hello world!"
+}
 ```
 
 #### msg <a id="h3-statusinfo"></a>
@@ -69,8 +72,8 @@ msg字段 _通常_是一个JSON String或JSON Object，表示除了请求状态�
 
 ```text
 {    
-"code": 200,   
-"msg": "参数错误"
+ "code": 200,   
+ "msg": "参数错误"
  }
 ```
 
@@ -83,9 +86,9 @@ msg字段 _通常_是一个JSON String或JSON Object，表示除了请求状态�
     "text": "参数错误",     
     "parameters": {           
      "email": "电子邮件格式不正确"  
-  }    
+   }    
   }
-  }
+}
 ```
 
 #### data <a id="h3-data"></a>
@@ -117,7 +120,12 @@ data字段可以是除JSON Null之外的任意JSON类型，表示请求返回的
 **数据场景：记录**
 
 ```text
-{    "id": 250,    "name": "erik",    "sex": 1,    "age": 18}
+{    
+    "id": 250,    
+    "name": "erik",    
+    "sex": 1,    
+    "age": 18
+}
 ```
 
 #### 数据页 <a id="h3-u6570u636Eu9875"></a>
