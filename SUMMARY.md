@@ -25,6 +25,7 @@
   * [常用实例](java-kai-fa-shou-ce/kai-fa-gui-fan/chang-yong-shi-li.md)
   * [开发新模块](java-kai-fa-shou-ce/kai-fa-gui-fan/kai-fa-xin-mo-kuai.md)
   * [权限控制](java-kai-fa-shou-ce/kai-fa-gui-fan/quan-xian-kong-zhi.md)
+  * [模块引用](java-kai-fa-shou-ce/kai-fa-gui-fan/mo-kuai-yin-yong.md)
 
 ## Vue 开发手册
 
